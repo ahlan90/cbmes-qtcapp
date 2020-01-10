@@ -4,16 +4,20 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'ocorrencia',
     pathMatch: 'full'
   },
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    path: 'ocorrencia',
+    loadChildren: () => import('./ocorrencia-list/ocorrencia-list.module').then(m => m.OcorrenciaListPageModule)
   },
   {
-    path: 'list',
-    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
+    path: 'nova',
+    loadChildren: () => import('./ocorrencia-new/ocorrencia-new.module').then(m => m.OcorrenciaNewPageModule)
+  },
+  {
+    path: 'atualizar/:id',
+    loadChildren: () => import('./ocorrencia-update/ocorrencia-update.module').then( m => m.OcorrenciaUpdatePageModule)
   }
 ];
 

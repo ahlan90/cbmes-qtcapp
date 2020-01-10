@@ -1,5 +1,7 @@
 {
-  "name": "qtcApp",
-  "integrations": {},
+  "name": "BizuON",
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
