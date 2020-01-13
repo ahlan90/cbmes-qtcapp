@@ -13,16 +13,28 @@ export class OcorrenciaListPage implements OnInit {
   private selectedItem: any;
 
   public ocorrencias: Array<Ocorrencia> = [];
+
+  exibeLista = true;
+
   constructor(
     private ocorrenciaService: OcorrenciaService,
     private router: Router
     ) {}
 
   ngOnInit() {
-    this.ocorrencias = this.ocorrenciaService.getAll();
+  }
+
+  ionViewDidEnter(){
+    this.exibeLista = true;
+    this.ocorrenciaService.getAll().subscribe( res => this.ocorrencias = res as Ocorrencia[]);
   }
 
   goToForm() {
-    this.router.navigate(['/nova']);
+    this.exibeLista = false;
+    
+    //Ajustando bug do layout
+    setTimeout(() => {
+      this.router.navigate(['/nova']);
+    },10);
   }
 }

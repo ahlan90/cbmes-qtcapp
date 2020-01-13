@@ -41,12 +41,6 @@ export class OcorrenciaUpdatePage implements OnInit {
 
   ngOnInit() {
 
-    // this.activatedRoute.params.subscribe(res => {
-    //   const idOcorrencia = res.id;
-    //   console.log('id', idOcorrencia);
-    //   this.ocorrencia = this.ocorrenciaService.get(Number(res.id));
-    // });
-
     this.sexos = [
       'Masculino',
       'Feminino'
@@ -91,17 +85,43 @@ export class OcorrenciaUpdatePage implements OnInit {
         uf: new FormControl('', null),
       })
     });
+
+
+    this.activatedRoute.params.subscribe(res => {
+      this.ocorrenciaService.get(Number(res.id)).subscribe(res => {
+        this.ocorrencia = res;
+        this.validationsForm.patchValue({
+          nome: this.ocorrencia.vitima.nome,
+          dataNascimento: this.ocorrencia.vitima.dataNascimento,
+          identidade: this.ocorrencia.vitima.identidade,
+          ufIdentidade: this.ocorrencia.vitima.ufIdentidade,
+          cpf: this.ocorrencia.vitima.cpf,
+          nomeMae: this.ocorrencia.vitima.nomeMae,
+          nomePai: this.ocorrencia.vitima.nomePai,
+          sexo: this.ocorrencia.vitima.sexo,
+          cor: this.ocorrencia.vitima.cor,
+          nacionalidade: this.ocorrencia.vitima.nacionalidade,
+          altura: this.ocorrencia.vitima.altura,
+          naturalidade: this.ocorrencia.vitima.naturalidade,
+          estadoCivil: this.ocorrencia.vitima.estadoCivil,
+          email: this.ocorrencia.vitima.email,
+          telefone: this.ocorrencia.vitima.telefone
+        });
+      });
+
+    });
   }
 
-  // onSubmit(values) {
-  //   this.ocorrenciaService.addVitima(values);
-  //   this.validationsForm.reset();
-  //   this.presentToast();
-  //   this.router.navigate(['/ocorrencia']);
-  // }
+  onSubmit(values) {
+      this.ocorrencia.vitima = values;
 
+      this.ocorrenciaService.update(this.ocorrencia);
+      this.validationsForm.reset();
+      //this.presentToast();
+      this.router.navigate(['/ocorrencia']);
+    }
 
   segmentChanged(ev) {
-    this.tabSegment = ev.detail.value;
-  }
+      this.tabSegment = ev.detail.value;
+    }
 }

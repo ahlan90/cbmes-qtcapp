@@ -23,7 +23,7 @@
 </ion-header>
 
 
-<ion-content padding class="form-content">  
+<ion-content>  
   <form
     [formGroup]="validationsForm"
     (ngSubmit)="onSubmit(validationsForm.value)"
@@ -267,8 +267,7 @@
     </div>
 
     <div *ngIf="tabSegment == 'kilometragem'" >
-      <h1>Kilometragem</h1>
-
+      <h1 class="ion-padding">Em construção...</h1>
     </div>
       <ion-row>
         <ion-col>

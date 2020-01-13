@@ -13,17 +13,19 @@ import { environment } from '../environments/environment';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { BrMaskerModule } from 'br-mask';
+import { StorageModule } from '@ngx-pwa/local-storage';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({}),
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     BrMaskerModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    StorageModule.forRoot({ IDBNoWrap: true })
   ],
   providers: [
     StatusBar,
