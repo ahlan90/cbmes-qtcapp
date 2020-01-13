@@ -5,6 +5,7 @@ import { Ocorrencia } from './../shared/models/ocorrencia';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import * as cep from 'cep-promise';
 
 @Component({
   selector: 'app-ocorrencia-update',
@@ -110,6 +111,32 @@ export class OcorrenciaUpdatePage implements OnInit {
       });
 
     });
+  }
+
+  preencheCEP(value) {
+    if (value.length === 10) {
+      const cepLimpo = value.replace(/\D/g, '');
+
+      cep(cepLimpo).then(res => {
+        this.validationsForm.patchValue({
+          endereco: {
+            bairro: res.neighborhood,
+            cidade: res.city,
+            logradouro: res.street,
+            uf: res.state,
+          }
+        });
+      });
+    }
+  }
+
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'A Ocorrência Salva.',
+      duration: 2000
+    });
+    toast.present();
   }
 
   onSubmit(values) {
