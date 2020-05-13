@@ -1,29 +1,70 @@
-<ion-header>
+<ion-header >
   <ion-toolbar color="danger">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Lista de Ocorrências
+      Ocorrências
     </ion-title>
   </ion-toolbar>
+  <ion-segment color="danger"  (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="emAberto" layout="icon-start" checked  >
+      <ion-label>Em Aberto</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="concluidas" layout="icon-start"  >
+      <ion-label>Concluídas</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 </ion-header>
-
-<ion-content>
-  <div *ngIf="exibeLista">
-    <ion-card *ngFor="let ocorrencia of ocorrencias" [routerLink]="['/atualizar', ocorrencia.id]">
-      <ion-card-header>
-        <ion-card-subtitle class="ion-text-end" >{{ ocorrencia.dataInicio | date: 'dd/MM/yyyy HH:mm' }}</ion-card-subtitle>
-        <ion-card-title>{{ ocorrencia.vitima.nome }}</ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content>
-      </ion-card-content>
+<ion-content style="background-color: #fa5873;">
+  <div *ngIf="exibeLista"  class="espaco-div">
+    <ion-card class="margem-card"  >
+      <div *ngIf="tabSegment == 'emAberto'" >
+        <ion-item-sliding style=" background-color:#f6f3f3;" *ngFor="let ocorrencia of ocorrencias">
+          <ion-item-options side="start" >
+              <ion-item-option color="success" (click)="conclui(ocorrencia)">
+                <ion-icon slot="bottom" name="checkmark-circle" size="large"></ion-icon>
+              </ion-item-option>
+          </ion-item-options>
+          <ion-item  lines="full">
+            <ion-label><p>{{ ocorrencia.dataInicio | date: 'dd/MM/yyyy HH:mm' }}</p> <p style="font-size:1.2rem; color: black;">{{ ocorrencia.vitima.nome }}</p> </ion-label>
+            <ion-card-content >
+            </ion-card-content>
+          </ion-item> 
+          <ion-item-options side="end">
+            <ion-item-option color="warning"  [routerLink]="['/atualizar', ocorrencia.id]">
+              <ion-icon slot="bottom" name="create" size="large"></ion-icon>
+            </ion-item-option>
+            <ion-item-option style="background-color: #dc3546;" (click)="remove(ocorrencia)">
+              <ion-icon slot="bottom" name="trash" size="large"></ion-icon>
+            </ion-item-option>
+          </ion-item-options> 
+        </ion-item-sliding>
+      </div>
+      
+      <div *ngIf="tabSegment == 'concluidas'" >
+        <ion-item-sliding style=" background-color:#f6f3f3;"  *ngFor="let ocorrenciaConcluida of ocorrenciasConcluidas">
+          <ion-item  lines="full" >
+            <ion-label><p>{{ ocorrenciaConcluida.dataInicio | date: 'dd/MM/yyyy HH:mm' }}</p> <p style="font-size:1.2rem; color: black;">{{ ocorrenciaConcluida.vitima.nome }}</p> </ion-label>
+            <ion-card-content >
+            </ion-card-content>
+          </ion-item> 
+  
+          <ion-item-options side="end">
+            <ion-item-option color="warning"  [routerLink]="['/atualizar', ocorrenciaConcluida.id]">
+              <ion-icon slot="bottom" name="create" size="large"></ion-icon>
+            </ion-item-option>
+            <ion-item-option style="background-color: #dc3546;" (click)="remove(ocorrenciaConcluida)">
+              <ion-icon slot="bottom" name="trash" size="large"></ion-icon>
+            </ion-item-option>
+          </ion-item-options> 
+        </ion-item-sliding> 
+      </div>
     </ion-card>
   </div>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="goToForm()" color="danger">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+      <ion-fab-button style (click)="goToForm()" color="danger" >
+      <ion-icon name="add" size="large"></ion-icon>
+      </ion-fab-button>
   </ion-fab>
 </ion-content>

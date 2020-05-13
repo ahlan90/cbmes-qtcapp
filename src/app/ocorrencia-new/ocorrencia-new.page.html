@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="danger">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button icon=arrow-back  defaultHref="ocorrencias" > </ion-back-button>
     </ion-buttons>
     <ion-title>
       Nova Ocorrência
@@ -15,7 +15,7 @@
     <ion-segment-button value="endereco" layout="icon-start">
       <ion-label>ENDEREÇO</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="kilometragem" layout="icon-start">
+    <ion-segment-button value="quilometragem" layout="icon-start">
       <ion-label>KM</ion-label>
     </ion-segment-button>
   </ion-segment>
@@ -61,7 +61,7 @@
           <ion-item>
             <ion-label position="stacked" color="danger">Telefone</ion-label>
             <ion-input
-              type="text"
+              type="tel"
               formControlName="telefone"
               class="input-lado-data"
             ></ion-input>
@@ -70,16 +70,20 @@
       </ion-row>
 
       <ion-row>
-        <ion-col size="6">
+        <ion-col >
           <ion-item>
             <ion-label position="stacked" color="danger">Identidade</ion-label>
             <ion-input type="text" formControlName="identidade"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col size="6">
+        <ion-col >
           <ion-item>
             <ion-label position="stacked" color="danger">UF</ion-label>
-            <ion-input type="text" formControlName="ufIdentidade"></ion-input>
+            <ion-select formControlName="ufIdentidade" cancelText="Cancel" okText="OK">
+              <ion-select-option *ngFor="let ufIdentidade of ufsIdentidades" [value]="ufIdentidade"
+                >{{ufIdentidade}}</ion-select-option
+              >
+            </ion-select>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -135,7 +139,7 @@
         <ion-col>
           <ion-item>
             <ion-label position="stacked" color="danger">Altura(cm)</ion-label>
-            <ion-input type="text" formControlName="altura"></ion-input>
+            <ion-input type="number" formControlName="altura"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -184,7 +188,7 @@
         <ion-col>
           <ion-item>
             <ion-label position="stacked" color="danger">Email</ion-label>
-            <ion-input type="text" formControlName="email"></ion-input>
+            <ion-input type="email" formControlName="email"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -200,10 +204,11 @@
               <ion-label position="stacked" color="danger">CEP</ion-label>
               <ion-input
                 type="tel"
+                max="10"
                 #cep
                 name="cep"
                 formControlName="cep"
-                [brmasker]="{mask: '00.000-000', type:'num'}"
+                [brmasker]="{mask: '00.000-000 ', type:'num'}"
                 (keyup)="preencheCEP(cep.value)"
               ></ion-input>
             </ion-item>
@@ -266,8 +271,132 @@
 
     </div>
 
-    <div *ngIf="tabSegment == 'kilometragem'" >
-      <h1 class="ion-padding">Em construção...</h1>
+    <div *ngIf="tabSegment == 'quilometragem'" >
+      <div formGroupName="quilometragem">
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-title color="danger" style="text-align: center">Batalhão</ion-title>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked" color="danger">Viatura</ion-label>
+              <ion-input type="text" name="viatura" placeholder="Viatura" formControlName="viatura"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked" color="danger">KM Saída do Batalhão</ion-label>
+              <ion-input 
+              type="tel" 
+              name="kmSaidaBatalhao" 
+              maxlength="6" 
+              placeholder="000000"
+              formControlName="kmSaidaBatalhao"
+              #kmSaidaBatalhao
+              (keyup)="preencheKm(kmSaidaBatalhao.value)"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked" color="danger">KM Chegada no Batalhão</ion-label>
+              <ion-input type="tel" name="KmSaida" min="0" maxlength="6" placeholder="000000" formControlName="kmChegadaBatalhao"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked" color="danger">Horário Saída do Batalhão</ion-label>
+              <ion-datetime displayFormat="HH:mm A" placeholder="00:00" formControlName="horaSaidaBatalhao" ></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked" color="danger">Horário Chegada no Batalhão</ion-label>
+              <ion-datetime displayFormat="HH:mm A" placeholder="00:00" formControlName="horaChegadaBatalhao"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-title color="danger" style="text-align: center">Local</ion-title>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked" color="danger">KM chegada no Local</ion-label>
+              <ion-input type="tel" name="KmSaida" min="0" maxlength="6" placeholder="000000" formControlName="kmChegadaLocal"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked" color="danger">Horário Chegada no Local</ion-label>
+              <ion-datetime displayFormat="HH:mm A" placeholder="00:00" formControlName="horaChegadaLocal"></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked" color="danger">Horário Saída do loca</ion-label>
+              <ion-datetime displayFormat="HH:mm A" placeholder="00:00" formControlName="horaSaidaLocal"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-title color="danger" style="text-align: center">Hospital</ion-title>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked" color="danger">KM chegada no Hospital</ion-label>
+              <ion-input type="tel" name="KmChegada" maxlength="6" placeholder="000000" formControlName="kmChegadaHospital" ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked" color="danger">Horário chegada no Hospital</ion-label>
+              <ion-datetime displayFormat="HH:mm A" placeholder="00:00" formControlName="horaChegadaHospital"></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked" color="danger">Horário Saída do Hospital</ion-label>
+              <ion-datetime displayFormat="HH:mm A" placeholder="00:00" formControlName="horaSaidaHospital"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="floating" color="danger">Observação:</ion-label>
+              <ion-textarea name="observacao" rows="6" formControlName="observacao"></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </div>
     </div>
       <ion-row>
         <ion-col>

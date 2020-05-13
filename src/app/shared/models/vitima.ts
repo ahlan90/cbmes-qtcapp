@@ -1,4 +1,5 @@
 import { Endereco } from './endereco';
+import { Quilometragem } from './quilometragem';
 export interface Vitima {
     nome: string;
     dataNascimento: string;
@@ -16,4 +17,6 @@ export interface Vitima {
     endereco: Endereco;
     email: string;
     telefone: string;
+    quilometragem: Quilometragem;
+    concluida: boolean;
 }

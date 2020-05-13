@@ -13,13 +13,13 @@ export class AppComponent {
   public appPages = [
     {
       title: 'Ocorrências',
-      url: '/ocorrencia',
-      icon: 'list'
+      url: '/ocorrencias',
+      icon: 'list-box'
     },
     {
       title: 'Nova Ocorrência',
       url: '/nova',
-      icon: 'person'
+      icon: 'add-circle'
     }
   ];
 

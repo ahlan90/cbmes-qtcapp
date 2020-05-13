@@ -4,11 +4,11 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'ocorrencia',
+    redirectTo: 'ocorrencias',
     pathMatch: 'full'
   },
   {
-    path: 'ocorrencia',
+    path: 'ocorrencias',
     loadChildren: () => import('./ocorrencia-list/ocorrencia-list.module').then(m => m.OcorrenciaListPageModule)
   },
   {
@@ -18,7 +18,8 @@ const routes: Routes = [
   {
     path: 'atualizar/:id',
     loadChildren: () => import('./ocorrencia-update/ocorrencia-update.module').then( m => m.OcorrenciaUpdatePageModule)
-  }
+  },
+
 ];
 
 @NgModule({

@@ -33,6 +33,7 @@ export class OcorrenciaService {
 
       this.ocorrencia.id = this.listaOcorrencias.length + 1;
       this.ocorrencia.dataInicio = new Date();
+      this.ocorrencia.finalizada = false;
       this.ocorrencia.vitima = vitima;
       this.listaOcorrencias.push(this.ocorrencia);
       this.ocorrencia = {} as Ocorrencia;
@@ -64,5 +65,26 @@ export class OcorrenciaService {
       this.store.set(KEY_LOCAL_STORAGE, this.listaOcorrencias).subscribe(() => {});
     });
   }
+
+  conclui(ocorrencia: Ocorrencia) {
+    ocorrencia.finalizada = true;
+    ocorrencia.vitima.concluida = true;
+    this.update(ocorrencia);
+  }
+
+  remove(ocorrencia ) {
+      this.store.get(KEY_LOCAL_STORAGE).subscribe(res => {
+      
+      this.listaOcorrencias = res as Ocorrencia[];
+      
+      this.listaOcorrencias = this.listaOcorrencias.filter(x => x.id !== ocorrencia.id);
+      
+      this.store.delete(KEY_LOCAL_STORAGE).subscribe(() => {});
+
+      this.store.set(KEY_LOCAL_STORAGE, this.listaOcorrencias).subscribe(() => {});
+
+    });
+  }
+
 
 }
